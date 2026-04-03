@@ -1,0 +1,44 @@
+---
+interface Props {
+  productName: string;
+  href?: string;
+  trialText?: string;
+}
+
+const { productName, href = "#", trialText = `Try ${productName} free` } = Astro.props;
+---
+
+<div class="affiliate-btn-wrapper">
+  <a href={href} class="affiliate-btn" rel="nofollow noopener" target="_blank">
+    {trialText} &rarr;
+  </a>
+  <span class="affiliate-disclaimer">Affiliate link</span>
+</div>
+
+<style>
+  .affiliate-btn-wrapper {
+    margin: 1rem 0;
+  }
+  
+  .affiliate-btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background: var(--teal);
+    color: var(--white);
+    border-radius: 0.375rem;
+    font-weight: 600;
+    transition: background 0.2s;
+  }
+  
+  .affiliate-btn:hover {
+    background: var(--teal-light);
+    color: var(--white);
+  }
+  
+  .affiliate-disclaimer {
+    display: block;
+    font-size: 0.7rem;
+    color: var(--gray-400);
+    margin-top: 0.25rem;
+  }
+</style>

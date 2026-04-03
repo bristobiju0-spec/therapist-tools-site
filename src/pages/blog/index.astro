@@ -1,0 +1,39 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+
+const posts = await getCollection('posts');
+
+const sortedPosts = posts.sort((a, b) => 
+  new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime()
+);
+---
+
+<BaseLayout title="All Articles" description="Browse all our guides, reviews, and comparisons for therapist software tools.">
+  <section class="blog-page">
+    <div class="container">
+      <h1>All Articles</h1>
+      <div class="grid grid-3">
+        {sortedPosts.map(post => (
+          <PostCard 
+            title={post.data.title}
+            excerpt={post.body.slice(0, 150).replace(/[#*`]/g, '').trim() + '...'}
+            category={post.data.category}
+            href={`/blog/${post.slug}`}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .blog-page {
+    padding: 3rem 0;
+  }
+  
+  .blog-page h1 {
+    margin-bottom: 2rem;
+  }
+</style>

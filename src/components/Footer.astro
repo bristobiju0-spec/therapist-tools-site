@@ -1,0 +1,66 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      <p class="copyright">&copy; {currentYear} Therapist Tools. All rights reserved.</p>
+      <nav class="footer-links">
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/affiliate-disclosure">Affiliate Disclosure</a>
+        <a href="/contact">Contact</a>
+      </nav>
+    </div>
+    <p class="disclaimer">This site contains affiliate links. We may earn a commission at no extra cost to you.</p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--gray-50);
+    border-top: 1px solid var(--gray-200);
+    padding: 2rem 0;
+    margin-top: 4rem;
+  }
+  
+  .footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .copyright {
+    color: var(--gray-600);
+    font-size: 0.875rem;
+  }
+  
+  .footer-links {
+    display: flex;
+    gap: 1.5rem;
+  }
+  
+  .footer-links a {
+    color: var(--gray-600);
+    font-size: 0.875rem;
+  }
+  
+  .footer-links a:hover {
+    color: var(--teal);
+  }
+  
+  .disclaimer {
+    color: var(--gray-400);
+    font-size: 0.75rem;
+  }
+  
+  @media (max-width: 768px) {
+    .footer-content {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+</style>

@@ -1,0 +1,135 @@
+---
+const navLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/blog?category=practice-management', label: 'Practice Management' },
+  { href: '/blog?category=billing', label: 'Billing' },
+  { href: '/blog?category=telehealth', label: 'Telehealth' },
+  { href: '/blog?category=marketing', label: 'Marketing' },
+  { href: '/blog?category=finance', label: 'Finance' },
+];
+---
+
+<header class="header">
+  <div class="container">
+    <nav class="nav">
+      <a href="/" class="logo">Therapist Tools</a>
+      
+      <input type="checkbox" id="menu-toggle" class="menu-toggle sr-only" />
+      <label for="menu-toggle" class="hamburger" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </label>
+      
+      <ul class="nav-links">
+        {navLinks.map(link => (
+          <li><a href={link.href}>{link.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .header {
+    background: var(--white);
+    border-bottom: 1px solid var(--gray-200);
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+  
+  .logo {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--navy);
+  }
+  
+  .logo:hover {
+    color: var(--teal);
+  }
+  
+  .nav-links {
+    display: flex;
+    list-style: none;
+    gap: 1.5rem;
+  }
+  
+  .nav-links a {
+    color: var(--gray-600);
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+  
+  .nav-links a:hover {
+    color: var(--teal);
+  }
+  
+  .menu-toggle {
+    display: none;
+  }
+  
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 0.5rem;
+  }
+  
+  .hamburger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--navy);
+    transition: transform 0.3s;
+  }
+  
+  @media (max-width: 768px) {
+    .hamburger {
+      display: flex;
+    }
+    
+    .menu-toggle:checked ~ .hamburger span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+    
+    .menu-toggle:checked ~ .hamburger span:nth-child(2) {
+      opacity: 0;
+    }
+    
+    .menu-toggle:checked ~ .hamburger span:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
+    }
+    
+    .nav-links {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: var(--white);
+      flex-direction: column;
+      padding: 1rem;
+      border-bottom: 1px solid var(--gray-200);
+      display: none;
+      gap: 0;
+    }
+    
+    .menu-toggle:checked ~ .nav-links {
+      display: flex;
+    }
+    
+    .nav-links li {
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--gray-100);
+    }
+  }
+</style>

@@ -1,0 +1,55 @@
+---
+interface Props {
+  title: string;
+  excerpt: string;
+  category: string;
+  href: string;
+}
+
+const { title, excerpt, category, href } = Astro.props;
+---
+
+<article class="card post-card">
+  <span class="pill">{category}</span>
+  <h3><a href={href}>{title}</a></h3>
+  <p class="excerpt">{excerpt}</p>
+  <a href={href} class="read-more">Read more &rarr;</a>
+</article>
+
+<style>
+  .post-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .post-card h3 {
+    margin: 0;
+    font-size: 1.125rem;
+  }
+  
+  .post-card h3 a {
+    color: var(--navy);
+  }
+  
+  .post-card h3 a:hover {
+    color: var(--teal);
+  }
+  
+  .excerpt {
+    color: var(--gray-600);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    flex: 1;
+  }
+  
+  .read-more {
+    color: var(--teal);
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+  
+  .read-more:hover {
+    color: var(--teal-light);
+  }
+</style>

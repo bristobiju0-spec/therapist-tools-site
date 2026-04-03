@@ -1,0 +1,158 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import AffiliateButton from '../components/AffiliateButton.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  pubDate?: Date;
+  category?: string;
+  readingTime?: number;
+}
+
+const { title, description, pubDate, category, readingTime = 5 } = Astro.props;
+
+const formattedDate = pubDate 
+  ? new Date(pubDate).toLocaleDateString('en-US', { 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric' 
+    })
+  : null;
+---
+
+<BaseLayout title={title} description={description}>
+  <article class="post-layout">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="/">Home</a> &rsaquo; <a href="/blog">Blog</a> &rsaquo; <span>{title}</span>
+      </nav>
+      
+      <div class="post-container">
+        <div class="post-content">
+          <header class="post-header">
+            {category && <span class="pill">{category}</span>}
+            <h1>{title}</h1>
+            {formattedDate && <p class="post-meta">Last updated: {formattedDate} &bull; {readingTime} min read</p>}
+          </header>
+          
+          <div class="prose">
+            <slot />
+          </div>
+          
+          <div class="author-box">
+            <p><strong>Reviewed by the Therapist Tools editorial team</strong></p>
+          </div>
+        </div>
+        
+        <aside class="sidebar">
+          <div class="sidebar-section">
+            <h3>Top Picks</h3>
+            <div class="top-picks">
+              <div class="top-pick">
+                <strong>SimplePractice</strong>
+                <AffiliateButton productName="SimplePractice" />
+              </div>
+              <div class="top-pick">
+                <strong>TherapyNotes</strong>
+                <AffiliateButton productName="TherapyNotes" />
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .post-layout {
+    padding: 2rem 0;
+  }
+  
+  .breadcrumb {
+    font-size: 0.875rem;
+    color: var(--gray-600);
+    margin-bottom: 2rem;
+  }
+  
+  .breadcrumb a {
+    color: var(--teal);
+  }
+  
+  .breadcrumb a:hover {
+    text-decoration: underline;
+  }
+  
+  .post-container {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 3rem;
+  }
+  
+  .post-header {
+    margin-bottom: 2rem;
+  }
+  
+  .post-header h1 {
+    margin-top: 0.75rem;
+  }
+  
+  .post-meta {
+    color: var(--gray-600);
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+  }
+  
+  .author-box {
+    margin-top: 3rem;
+    padding: 1.5rem;
+    background: var(--gray-50);
+    border-radius: 0.5rem;
+    border: 1px solid var(--gray-200);
+  }
+  
+  .sidebar {
+    position: sticky;
+    top: 100px;
+    align-self: start;
+  }
+  
+  .sidebar-section {
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+  }
+  
+  .sidebar-section h3 {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .top-picks {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .top-pick {
+    text-align: center;
+  }
+  
+  .top-pick strong {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--navy);
+  }
+  
+  @media (max-width: 968px) {
+    .post-container {
+      grid-template-columns: 1fr;
+    }
+    
+    .sidebar {
+      display: none;
+    }
+  }
+</style>
