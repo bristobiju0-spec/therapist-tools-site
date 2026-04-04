@@ -36,7 +36,7 @@ const formattedDate = pubDate
             {formattedDate && <p class="post-meta">Last updated: {formattedDate} &bull; {readingTime} min read</p>}
           </header>
           
-          <div class="prose">
+          <div class="prose" style="max-width: 780px; margin: 0 auto; padding: 0 1rem;">
             <slot />
           </div>
           
