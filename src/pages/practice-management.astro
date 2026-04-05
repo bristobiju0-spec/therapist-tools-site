@@ -1,0 +1,93 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('posts');
+const categoryPosts = allPosts.filter(post => post.data.category === 'Practice Management');
+---
+
+<BaseLayout title="Practice Management" description="The best practice management software for therapists, reviewed and compared.">
+  <section class="category-page">
+    <div class="container">
+      <h1>Practice Management Articles</h1>
+      <p class="subtitle">Find the best tools to manage your therapy practice efficiently.</p>
+      <div class="grid grid-3">
+        {categoryPosts.map(post => (
+          <a href={`/blog/${post.slug}`} class="post-card">
+            <span class="category-pill">{post.data.category}</span>
+            <h3>{post.data.title}</h3>
+            <p>{post.data.description}</p>
+            <span class="read-more">Read more →</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .category-page {
+    padding: 3rem 0;
+  }
+  
+  .category-page h1 {
+    margin-bottom: 0.5rem;
+  }
+  
+  .subtitle {
+    color: var(--gray-600);
+    font-size: 1.125rem;
+    margin-bottom: 2rem;
+  }
+  
+  .post-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    text-decoration: none;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  
+  .post-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+  }
+  
+  .category-pill {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    background: var(--teal);
+    color: var(--white);
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.75rem;
+    align-self: flex-start;
+  }
+  
+  .post-card h3 {
+    color: var(--navy);
+    font-size: 1.125rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.4;
+  }
+  
+  .post-card p {
+    color: var(--gray-600);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    flex: 1;
+    margin-bottom: 1rem;
+  }
+  
+  .read-more {
+    color: var(--teal);
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+</style>

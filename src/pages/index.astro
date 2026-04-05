@@ -1,45 +1,18 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import PostCard from '../components/PostCard.astro';
-
-const featuredPosts = [
-  {
-    title: "SimplePractice vs TherapyNotes",
-    excerpt: "A comprehensive comparison of the two most popular practice management platforms for solo therapists.",
-    category: "Practice Management",
-    href: "/blog/simplepractice-vs-therapynotes"
-  },
-  {
-    title: "Best Practice Management Software",
-    excerpt: "The top practice management tools for therapists in 2024, reviewed and ranked by real users.",
-    category: "Practice Management",
-    href: "/blog/best-practice-management-software"
-  },
-  {
-    title: "TherapyNotes Review",
-    excerpt: "An honest review of TherapyNotes: features, pricing, pros, cons, and who it's best for.",
-    category: "Practice Management",
-    href: "/blog/therapynotes-review"
-  },
-  {
-    title: "How to Bill Insurance as a Therapist",
-    excerpt: "A step-by-step guide to billing insurance as a therapist, including the best software tools.",
-    category: "Billing",
-    href: "/blog/how-to-bill-insurance"
-  },
-  {
-    title: "Best HIPAA Telehealth Platforms",
-    excerpt: "The most secure and reliable telehealth platforms for therapists that actually meet HIPAA requirements.",
-    category: "Telehealth",
-    href: "/blog/best-hipaa-telehealth-platforms"
-  },
-  {
-    title: "Best Accounting Software for Therapists",
-    excerpt: "Top accounting tools for self-employed therapists, from tax prep to invoicing.",
-    category: "Finance",
-    href: "/blog/best-accounting-software"
-  }
+import { getCollection } from 'astro:content';
+const allPosts = await getCollection('posts');
+const featuredSlugs = [
+  'simplepractice-vs-therapynotes',
+  'therapynotes-review-pros-cons-and-who-its-best-for',
+  'how-to-bill-insurance-as-a-therapist-step-by-step-guide',
+  'best-practice-management-software-therapists',
+  'best-hipaa-compliant-telehealth-platforms-for-therapists',
+  'best-accounting-software-for-self-employed-therapists'
 ];
+const featuredPosts = featuredSlugs
+  .map(slug => allPosts.find(p => p.slug === slug))
+  .filter(Boolean);
 ---
 
 <BaseLayout title="Therapist Tools">
@@ -56,12 +29,12 @@ const featuredPosts = [
       <h2>Featured Guides</h2>
       <div class="grid grid-3">
         {featuredPosts.map(post => (
-          <PostCard 
-            title={post.title}
-            excerpt={post.excerpt}
-            category={post.category}
-            href={post.href}
-          />
+          <a href={`/blog/${post.slug}`} class="post-card">
+            <span class="category-pill">{post.data.category}</span>
+            <h3>{post.data.title}</h3>
+            <p>{post.data.description}</p>
+            <span class="read-more">Read more →</span>
+          </a>
         ))}
       </div>
     </div>
@@ -138,5 +111,56 @@ const featuredPosts = [
     color: var(--teal);
     font-weight: bold;
     margin-right: 0.5rem;
+  }
+  
+  .post-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    text-decoration: none;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  
+  .post-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+  }
+  
+  .post-card .category-pill {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    background: var(--teal);
+    color: var(--white);
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.75rem;
+    align-self: flex-start;
+  }
+  
+  .post-card h3 {
+    color: var(--navy);
+    font-size: 1.125rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.4;
+  }
+  
+  .post-card p {
+    color: var(--gray-600);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    flex: 1;
+    margin-bottom: 1rem;
+  }
+  
+  .post-card .read-more {
+    color: var(--teal);
+    font-weight: 600;
+    font-size: 0.9rem;
   }
 </style>
